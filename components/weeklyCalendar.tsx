@@ -25,8 +25,8 @@ export function WeeklyCalendar({
   const [currentWeek, setCurrentWeek] = useState<Date[]>([]);
 
   useEffect(() => {
-    const weekStart = startOfWeek(new Date(), { weekStartsOn: 0 }); // 0 = Sunday
-    const weekEnd = endOfWeek(weekStart, { weekStartsOn: 0 });
+    const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 }); // Monday
+    const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 }); // Sunday
     const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
     setCurrentWeek(weekDays);
   }, []);
@@ -40,7 +40,7 @@ export function WeeklyCalendar({
   return (
     <View style={styles.calendarContainer}>
       <View style={styles.header}>
-        <Text style={styles.title}>This Week</Text>
+        <Text style={styles.title}>Week Days</Text>
         <Text style={styles.dateRange}>
           {format(currentWeek[0] || new Date(), "MMM d")} -{" "}
           {format(currentWeek[6] || new Date(), "MMM d")}
@@ -50,14 +50,10 @@ export function WeeklyCalendar({
       <View style={styles.weekRow}>
         {currentWeek.map((day, index) => {
           const isSelected = isSameDay(day, selectedDate);
-          const isCurrent = isToday(day);
-          const isPastDay = isPast(day) && !isToday(day);
           const isFutureDay = isFuture(day);
           const isWeekendDay = isWeekend(day);
-
           const isDisabled = isFutureDay || isWeekendDay;
 
-          const dayName = format(day, "EEE").substring(0, 1);
           const dayNumber = format(day, "d");
 
           return (
@@ -68,15 +64,17 @@ export function WeeklyCalendar({
               activeOpacity={isDisabled ? 1 : 0.7}
               disabled={isDisabled}
             >
-              <Text style={[styles.dayName, isDisabled && styles.disabledText]}>
-                {dayName}
-              </Text>
+              <View
+                style={[
+                  styles.indicator,
+                  { backgroundColor: isSelected ? "#000" : "#D1D5DB" },
+                ]}
+              ></View>
               <View
                 style={[
                   styles.dayCircle,
                   isDisabled && styles.disabledCircle,
                   isSelected && styles.selectedDay,
-                  isCurrent && !isSelected && styles.currentDay,
                 ]}
               >
                 <Text
@@ -84,8 +82,6 @@ export function WeeklyCalendar({
                     styles.dayNumber,
                     isDisabled && styles.disabledText,
                     isSelected && styles.selectedDayText,
-                    isCurrent && !isSelected && styles.currentDayText,
-                    isPastDay && !isDisabled && styles.pastDayText,
                   ]}
                 >
                   {dayNumber}
@@ -125,8 +121,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   dayContainer: {
+    backgroundColor: "#f3f4f6",
+    height: 80,
     alignItems: "center",
-    flex: 1,
+    justifyContent: "space-between",
+    paddingTop: 12,
+    paddingHorizontal: 2,
+    borderRadius: 999,
   },
   dayName: {
     fontSize: 12,
@@ -157,13 +158,9 @@ const styles = StyleSheet.create({
   selectedDayText: {
     color: "white",
   },
-  currentDay: {
-    backgroundColor: "#DBEAFE", // blue-100
-  },
-  currentDayText: {
-    color: "#1E40AF", // blue-800
-  },
-  pastDayText: {
-    color: "#374151", // gray-700
+  indicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
 });

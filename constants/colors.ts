@@ -7,7 +7,7 @@ const tintcolorlight = "#3b82f6";
 
 export const Colors = {
   text: "#181818",
-  background: "#fafafa",
+  background: "#fff",
   tint: tintcolorlight,
   icon: "#687076",
   tabicondefault: "#687076",

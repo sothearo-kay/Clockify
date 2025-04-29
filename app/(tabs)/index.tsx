@@ -1,9 +1,18 @@
+import { useState } from "react";
 import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { Colors } from "@/constants/colors";
 import { Avatar } from "@/components/avatar";
 import { WeeklyCalendar } from "@/components/weeklyCalendar";
+import { isToday } from "date-fns";
 
 export default function HomeScreen() {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const selectedIsToday = isToday(selectedDate);
+
+  const handleSelectDate = (date: Date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -11,7 +20,10 @@ export default function HomeScreen() {
         <Avatar />
       </View>
 
-      <WeeklyCalendar />
+      <WeeklyCalendar
+        selectedDate={selectedDate}
+        onSelectDate={handleSelectDate}
+      />
     </SafeAreaView>
   );
 }

@@ -38,12 +38,31 @@ export function ResizablePanel({
       style={[style, { overflow: "hidden" }]}
     >
       <MotiView
-        key={String(Date.now())}
+        key={JSON.stringify(children, ignoreCircularReferences())}
         from={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        transition={{ type: "timing", duration }}
       >
         <View onLayout={onLayout}>{children}</View>
       </MotiView>
     </MotiView>
   );
 }
+
+/*
+   Replacer function to JSON.stringify that ignores
+   circular references and internal React properties.
+ 
+   https://github.com/facebook/react/issues/8669#issuecomment-531515508
+ */
+const ignoreCircularReferences = () => {
+  const seen = new WeakSet();
+  return (key: any, value: any) => {
+    if (key.startsWith("_")) return; // Don't compare React's internal props.
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) return;
+      seen.add(value);
+    }
+    return value;
+  };
+};

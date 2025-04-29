@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { Link } from "expo-router";
 import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { Colors } from "@/constants/colors";

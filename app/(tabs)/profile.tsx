@@ -1,5 +1,6 @@
 import { SafeAreaView, Text, StyleSheet } from "react-native";
 import { MotiView } from "moti";
+import { Colors } from "@/constants/colors";
 
 export default function ProfileScreen() {
   return (
@@ -19,6 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fafafa",
+    backgroundColor: Colors.background,
   },
 });

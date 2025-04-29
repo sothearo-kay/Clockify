@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import {
   TouchableOpacity,
   Image,
@@ -12,37 +13,37 @@ interface AvatarProps extends TouchableOpacityProps {
   size?: number;
 }
 
-export function Avatar({
-  source,
-  seed,
-  size = 48,
-  style,
-  ...props
-}: AvatarProps) {
-  const avatarSource = source || {
-    uri: `https://api.dicebear.com/9.x/identicon/png?seed=${encodeURIComponent(seed || "default")}`,
-  };
+// @ts-ignore: suppress value-used-as-type error for TouchableOpacity
+export const Avatar = forwardRef<TouchableOpacity, AvatarProps>(
+  ({ source, seed, size = 48, style, ...props }, ref) => {
+    const avatarSource = source || {
+      uri: `https://api.dicebear.com/9.x/identicon/png?seed=${encodeURIComponent(seed || "default")}`,
+    };
 
-  return (
-    <TouchableOpacity
-      style={[
-        styles.avatarContainer,
-        { width: size, height: size, borderRadius: size / 2 },
-        style,
-      ]}
-      activeOpacity={0.8}
-      {...props}
-    >
-      <Image
-        source={avatarSource}
+    return (
+      <TouchableOpacity
+        ref={ref}
         style={[
-          styles.avatarImage,
+          styles.avatarContainer,
           { width: size, height: size, borderRadius: size / 2 },
+          style,
         ]}
-      />
-    </TouchableOpacity>
-  );
-}
+        activeOpacity={0.8}
+        {...props}
+      >
+        <Image
+          source={avatarSource}
+          style={[
+            styles.avatarImage,
+            { width: size, height: size, borderRadius: size / 2 },
+          ]}
+        />
+      </TouchableOpacity>
+    );
+  },
+);
+
+Avatar.displayName = "Avatar";
 
 const styles = StyleSheet.create({
   avatarContainer: {

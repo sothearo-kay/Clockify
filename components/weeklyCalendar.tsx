@@ -98,7 +98,6 @@ export function WeeklyCalendar({
 const styles = StyleSheet.create({
   calendarContainer: {
     backgroundColor: Colors.background,
-    paddingVertical: 16,
     paddingHorizontal: 12,
   },
   header: {

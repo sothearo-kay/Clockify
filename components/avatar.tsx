@@ -33,10 +33,8 @@ export const Avatar = forwardRef<TouchableOpacity, AvatarProps>(
       >
         <Image
           source={avatarSource}
-          style={[
-            styles.avatarImage,
-            { width: size, height: size, borderRadius: size / 2 },
-          ]}
+          resizeMode="cover"
+          style={{ width: size, height: size, borderRadius: size / 2 }}
         />
       </TouchableOpacity>
     );
@@ -49,8 +47,5 @@ const styles = StyleSheet.create({
   avatarContainer: {
     overflow: "hidden",
     backgroundColor: "#E5E7EB", // light gray background if image not loaded
-  },
-  avatarImage: {
-    resizeMode: "cover",
   },
 });

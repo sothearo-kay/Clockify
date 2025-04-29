@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { Link } from "expo-router";
 import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { Colors } from "@/constants/colors";
 import { Avatar } from "@/components/avatar";
 import { WeeklyCalendar } from "@/components/weeklyCalendar";
 import { Card } from "@/components/card";
+import { ResizablePanel } from "@/components/resizablePanel";
 import { CheckInSection } from "@/components/checkInSection";
 import { CheckInCardHeader } from "@/components/checkInCardHeader";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
@@ -47,18 +48,20 @@ export default function HomeScreen() {
       />
 
       <Card style={{ marginBlock: 24 }}>
-        <CheckInCardHeader
-          date={selectedDate}
-          currentTime={currentTime}
-          isPastDate={isPastDate}
-        />
-        <CheckInSection
-          morningCheckedIn={morningCheckedIn}
-          afternoonCheckedIn={afternoonCheckedIn}
-          isMorning={isMorning}
-          isPastDate={isPastDate}
-          handleCheckIn={handleCheckIn}
-        />
+        <ResizablePanel duration={400}>
+          <CheckInCardHeader
+            date={selectedDate}
+            currentTime={currentTime}
+            isPastDate={isPastDate}
+          />
+          <CheckInSection
+            morningCheckedIn={morningCheckedIn}
+            afternoonCheckedIn={afternoonCheckedIn}
+            isMorning={isMorning}
+            isPastDate={isPastDate}
+            handleCheckIn={handleCheckIn}
+          />
+        </ResizablePanel>
       </Card>
     </SafeAreaView>
   );

@@ -41,7 +41,7 @@ export function ResizablePanel({
         key={JSON.stringify(children, ignoreCircularReferences())}
         from={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ type: "timing", duration }}
+        transition={{ type: "timing", duration, delay: duration / 4 }}
       >
         <View onLayout={onLayout}>{children}</View>
       </MotiView>

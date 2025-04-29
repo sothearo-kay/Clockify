@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   default: {
     backgroundColor: "#3B82F6",
     borderWidth: 1,
+    borderColor: "transparent",
   },
   outline: {
     backgroundColor: "#F9FAFB",

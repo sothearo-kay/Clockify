@@ -15,12 +15,12 @@ interface AvatarProps extends TouchableOpacityProps {
 export function Avatar({
   source,
   seed,
-  size = 32,
+  size = 48,
   style,
   ...props
 }: AvatarProps) {
   const avatarSource = source || {
-    uri: `https://api.dicebear.com/9.x/identicon/svg?seed=${encodeURIComponent(seed || "default")}`,
+    uri: `https://api.dicebear.com/9.x/identicon/png?seed=${encodeURIComponent(seed || "default")}`,
   };
 
   return (

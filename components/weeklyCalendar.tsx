@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "500",
     color: "#1F2937", // gray-800
   },
   dateRange: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#6B7280", // gray-500
   },
   weekRow: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   dayContainer: {
     backgroundColor: "#f3f4f6",
-    height: 80,
+    height: 100,
     alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 12,
@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   dayCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "transparent",

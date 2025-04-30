@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     marginInline: 12,
     paddingHorizontal: 16,
-    paddingVertical: 24,
+    paddingVertical: 20,
     borderRadius: 10,
     boxShadow: `rgba(0, 0, 0, 0.05) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px`,
   },

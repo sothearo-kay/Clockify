@@ -48,7 +48,7 @@ export default function HomeScreen() {
       />
 
       <Card style={{ marginBlock: 24 }}>
-        <ResizablePanel duration={400}>
+        <ResizablePanel duration={400} contentKey={`check-in-${isPastDate}`}>
           <CheckInCardHeader
             date={selectedDate}
             currentTime={currentTime}

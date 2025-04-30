@@ -1,16 +1,18 @@
 import { useCallback, useState } from "react";
 import { View, LayoutChangeEvent, StyleProp, ViewStyle } from "react-native";
-import { MotiView, useDynamicAnimation } from "moti";
+import { AnimatePresence, MotiView, useDynamicAnimation } from "moti";
 
 interface ResizablePanelProps extends React.PropsWithChildren {
   style?: StyleProp<ViewStyle>;
   duration?: number;
+  contentKey: string | number;
 }
 
 export function ResizablePanel({
   children,
   style,
   duration = 100,
+  contentKey,
 }: ResizablePanelProps) {
   const animation = useDynamicAnimation(() => ({
     height: 0,
@@ -35,34 +37,32 @@ export function ResizablePanel({
     <MotiView
       state={measured ? animation : undefined}
       transition={{ type: "timing", duration }}
-      style={[style, { overflow: "hidden" }]}
+      style={[style, { overflow: "hidden", position: "relative" }]}
     >
-      <MotiView
-        key={JSON.stringify(children, ignoreCircularReferences())}
-        from={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ type: "timing", duration, delay: duration / 4 }}
-      >
-        <View onLayout={onLayout}>{children}</View>
-      </MotiView>
+      <AnimatePresence>
+        <MotiView
+          key={contentKey}
+          from={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            type: "timing",
+            duration: duration / 2,
+            delay: duration / 2,
+          }}
+          exitTransition={{ type: "timing", duration: duration / 2 }}
+        >
+          <View
+            onLayout={onLayout}
+            style={{
+              position: measured ? "absolute" : "relative",
+              insetInline: 0,
+            }}
+          >
+            {children}
+          </View>
+        </MotiView>
+      </AnimatePresence>
     </MotiView>
   );
 }
-
-/*
-   Replacer function to JSON.stringify that ignores
-   circular references and internal React properties.
- 
-   https://github.com/facebook/react/issues/8669#issuecomment-531515508
- */
-const ignoreCircularReferences = () => {
-  const seen = new WeakSet();
-  return (key: any, value: any) => {
-    if (key.startsWith("_")) return; // Don't compare React's internal props.
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) return;
-      seen.add(value);
-    }
-    return value;
-  };
-};

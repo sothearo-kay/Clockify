@@ -10,6 +10,7 @@ import { CheckInSection } from "@/components/checkInSection";
 import { CheckInCardHeader } from "@/components/checkInCardHeader";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 import { isPast, isToday } from "date-fns";
+import { RecentHistory } from "@/components/recentHistory";
 
 export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -62,6 +63,10 @@ export default function HomeScreen() {
             handleCheckIn={handleCheckIn}
           />
         </ResizablePanel>
+      </Card>
+
+      <Card>
+        <RecentHistory />
       </Card>
     </SafeAreaView>
   );

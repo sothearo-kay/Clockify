@@ -28,11 +28,6 @@ const mockAttendanceHistory: AttendanceRecord[] = [
     morning: { status: AttendanceStatus.LATE },
     afternoon: { status: AttendanceStatus.PRESENT },
   },
-  {
-    date: "2025-04-27",
-    morning: { status: AttendanceStatus.PRESENT },
-    afternoon: { status: AttendanceStatus.ABSENT },
-  },
 ];
 
 export function RecentHistory({

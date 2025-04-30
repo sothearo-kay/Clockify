@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "expo-router";
-import { SafeAreaView, Text, View, StyleSheet } from "react-native";
+import { SafeAreaView, Text, View, StyleSheet, ScrollView } from "react-native";
 import { Colors } from "@/constants/colors";
 import { Avatar } from "@/components/avatar";
 import { WeeklyCalendar } from "@/components/weeklyCalendar";
@@ -8,15 +8,17 @@ import { Card } from "@/components/card";
 import { ResizablePanel } from "@/components/resizablePanel";
 import { CheckInSection } from "@/components/checkInSection";
 import { CheckInCardHeader } from "@/components/checkInCardHeader";
-import { useCurrentTime } from "@/hooks/useCurrentTime";
-import { isPast, isToday } from "date-fns";
 import { RecentHistory } from "@/components/recentHistory";
+import { useCurrentTime } from "@/hooks/useCurrentTime";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { isPast, isToday } from "date-fns";
 
 export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [morningCheckedIn, setMorningCheckedIn] = useState(false);
   const [afternoonCheckedIn, setAfternoonCheckedIn] = useState(false);
   const currentTime = useCurrentTime();
+  const tabBarHeight = useBottomTabBarHeight();
 
   const selectedIsToday = isToday(selectedDate);
   const isMorning = currentTime.getHours() < 12;
@@ -36,38 +38,40 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Clockify</Text>
-        <Link href="/profile" asChild>
-          <Avatar />
-        </Link>
-      </View>
+      <ScrollView contentContainerStyle={{ paddingBottom: tabBarHeight }}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Clockify</Text>
+          <Link href="/profile" asChild>
+            <Avatar />
+          </Link>
+        </View>
 
-      <WeeklyCalendar
-        selectedDate={selectedDate}
-        onSelectDate={handleSelectDate}
-      />
+        <WeeklyCalendar
+          selectedDate={selectedDate}
+          onSelectDate={handleSelectDate}
+        />
 
-      <Card style={{ marginBlock: 24 }}>
-        <ResizablePanel duration={400} contentKey={`check-in-${isPastDate}`}>
-          <CheckInCardHeader
-            date={selectedDate}
-            currentTime={currentTime}
-            isPastDate={isPastDate}
-          />
-          <CheckInSection
-            morningCheckedIn={morningCheckedIn}
-            afternoonCheckedIn={afternoonCheckedIn}
-            isMorning={isMorning}
-            isPastDate={isPastDate}
-            handleCheckIn={handleCheckIn}
-          />
-        </ResizablePanel>
-      </Card>
+        <Card style={{ marginBlock: 20 }}>
+          <ResizablePanel duration={400} contentKey={`check-in-${isPastDate}`}>
+            <CheckInCardHeader
+              date={selectedDate}
+              currentTime={currentTime}
+              isPastDate={isPastDate}
+            />
+            <CheckInSection
+              morningCheckedIn={morningCheckedIn}
+              afternoonCheckedIn={afternoonCheckedIn}
+              isMorning={isMorning}
+              isPastDate={isPastDate}
+              handleCheckIn={handleCheckIn}
+            />
+          </ResizablePanel>
+        </Card>
 
-      <Card>
-        <RecentHistory />
-      </Card>
+        <Card>
+          <RecentHistory />
+        </Card>
+      </ScrollView>
     </SafeAreaView>
   );
 }

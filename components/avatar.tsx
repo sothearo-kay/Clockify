@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React from "react";
 import {
   TouchableOpacity,
   Image,
@@ -14,7 +14,7 @@ interface AvatarProps extends TouchableOpacityProps {
 }
 
 // @ts-ignore: suppress value-used-as-type error for TouchableOpacity
-export const Avatar = forwardRef<TouchableOpacity, AvatarProps>(
+export const Avatar = React.forwardRef<TouchableOpacity, AvatarProps>(
   ({ source, seed, size = 48, style, ...props }, ref) => {
     const avatarSource = source || {
       uri: `https://api.dicebear.com/9.x/identicon/png?seed=${encodeURIComponent(seed || "default")}`,
